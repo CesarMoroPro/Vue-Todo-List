@@ -2,6 +2,11 @@
         <header>
                 <h1>Vue3 To Do List</h1>
         </header>
+
+        <section>
+                <TodoForm />
+                <TodoList />
+        </section>
 </template>
 
 <script setup>
