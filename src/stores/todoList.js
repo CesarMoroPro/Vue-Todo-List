@@ -27,5 +27,16 @@ export const useTodoListStore = defineStore('todo-List', {
                                 return object.id !== itemID;
                         })
                 },
+
+                toogleCompleted(idToFind) {
+                        /* Dans le tableau todoList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
+                        alors je stocke cet élément dans la constante todo */
+                        const todo = this.todoList.find(object => object.id === idToFind);
+                        // si "todo" existe
+                        if(todo) {
+                                // alors la nouvelle valeur de completed est son contraire
+                                todo.completed = !todo.completed;
+                        }
+                }
         }
 })
