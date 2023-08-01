@@ -12,7 +12,7 @@ export const useTodoListStore = defineStore('todo-List', {
         // actions
         actions: {
                 addItem(item) {
-                        this.todoList.push({
+                        this.todoList.unshift({
                                 item, /* = item: item */
                                 id: this.id++,
                                 completed: false,
