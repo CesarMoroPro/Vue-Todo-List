@@ -28,7 +28,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         })
                 },
 
-                toogleCompleted(idToFind) {
+                toggleCompleted(idToFind) {
                         /* Dans le tableau todoList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
                         alors je stocke cet élément dans la constante todo */
                         const todo = this.todoList.find(object => object.id === idToFind);
