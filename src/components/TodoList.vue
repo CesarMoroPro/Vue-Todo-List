@@ -1,7 +1,9 @@
 <template>
         <div v-for="todo in todoList" :key="todo.id" >
                 <div class="content">
-                        <span>{{ todo.item }}</span>
+                        <span :class="{ completed: todo.completed }">{{ todo.item }}</span>
+                        <span class="icons" @click.stop="toggleCompleted(todo.id)">&#10004;</span>
+                        <span class="icons" @click="toggleCompleted(todo.id)">&#10060;</span>
                 </div>
         </div>
 </template>
