@@ -6,12 +6,14 @@
         <section>
                 <TodoForm />
                 <TodoList />
+                <TodoArchive />
         </section>
 </template>
 
 <script setup>
         import TodoForm from '@/components/TodoForm.vue';
         import TodoList from '@/components/TodoList.vue';
+        import TodoArchive from '@/components/TodoArchive.vue';
 
 </script>
 
