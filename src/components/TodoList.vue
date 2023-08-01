@@ -1,9 +1,11 @@
 <template>
+        <h2>Liste des tâches</h2>
+
         <div v-for="todo in todoList" :key="todo.id" >
                 <div class="content">
                         <span :class="{ completed: todo.completed }">{{ todo.item }}</span>
                         <span class="icons" @click.stop="toggleCompleted(todo.id)">&#10004;</span>
-                        <span class="icons" @click="deleteItem(todo.id)">&#10060;</span>
+                        <span class="icons" @click="archiveItem(todo.id)" v-if="todo.completed">Archiver</span>
                 </div>
         </div>
 </template>
@@ -19,13 +21,13 @@ import { storeToRefs } from 'pinia';
 // Stockage du store dans une constante
 const store = useTodoListStore();
 
-/* Utilisation du destructuring pour extraire todoList dans le store.
+/* Utilisation du destructuring pour extraire todoList du store.
 Ici, storeToRefs crée des refs pour chaque state de store
 Donc todoList contiendra tous les states */
 const { todoList } = storeToRefs(store);
 
 // import de l'action toggleCompleted du store, via destructuring
-const { toggleCompleted, deleteItem } = store; 
+const { toggleCompleted, archiveItem } = store; 
 
 </script>
 
