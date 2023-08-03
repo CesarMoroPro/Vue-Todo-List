@@ -1,22 +1,23 @@
 <template>
-        <header>
-                <h1>Vue3 To Do List</h1>
-        </header>
+        <Header />
 
-        <section>
-                <TodoForm />
+        <main>
                 <TodoList />
                 <TodoArchive />
-        </section>
+        </main>
 </template>
 
 <script setup>
-        import TodoForm from '@/components/TodoForm.vue';
-        import TodoList from '@/components/TodoList.vue';
-        import TodoArchive from '@/components/TodoArchive.vue';
+import Header from '@/components/Header.vue';
+import TodoList from '@/components/TodoList.vue';
+import TodoArchive from '@/components/TodoArchive.vue';
 
 </script>
 
 <style lang="scss" scoped>
-
+main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+}
 </style>

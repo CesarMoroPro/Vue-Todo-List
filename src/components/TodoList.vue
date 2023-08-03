@@ -1,15 +1,17 @@
 <template>
-        <h2>Liste des tâches</h2>
-
-        <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
-        <div v-for="todo in todoList" :key="todo.id" >
-                <div class="content">
-                        <span :class="{ completed: todo.completed }">{{ todo.item }}</span>
-                        <span class="icons" @click.stop="toggleCompleted(todo.id)" v-show="!todo.completed">[ Valider ]</span>
-                        <span class="icons" @click.stop="toggleCompleted(todo.id)" v-show="todo.completed">[ Annuler ]</span>
-                        <span class="icons" @click="archiveItem(todo.id)" v-show="todo.completed">[ Archiver ]</span>
+        <section>
+                <h2>Liste des tâches</h2>
+        
+                <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
+                <div v-for="task in todoList" :key="task.id" >
+                        <div class="content">
+                                <span :class="{ completed: task.completed }">{{ task.item }}</span>
+                                <span class="icons" @click.stop="toggleCompleted(task.id)" v-show="!task.completed">[ Valider ]</span>
+                                <span class="icons" @click.stop="toggleCompleted(task.id)" v-show="task.completed">[ Annuler ]</span>
+                                <span class="icons" @click="archiveItem(task.id)" v-show="task.completed">[ Archiver ]</span>
+                        </div>
                 </div>
-        </div>
+        </section>
 </template>
 
 <script setup>
@@ -34,8 +36,13 @@ const { toggleCompleted, archiveItem } = store;
 </script>
 
 <style scoped>
-.completed {
-        text-decoration: line-through;
+section {
+        width: 65%;
+        margin-right: 5%;
+        border-right: solid 2px #CF308B;
+        .completed {
+                text-decoration: line-through;
+        }
 }
 
 </style>

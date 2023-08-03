@@ -12,13 +12,14 @@ export const useTodoListStore = defineStore('todo-List', {
 
         // actions
         actions: {
-                addItem(item) {
+                addItem(valueOfVModel) {
                         this.todoList.unshift({
-                                item, /* = item: item */
+                                item: valueOfVModel,
                                 id: this.id++,
                                 completed: false,
                                 archived: false,
-                        })
+                        });
+                        console.log(this.todoList)
                 },
 
                 toggleCompleted(idToFind) {
@@ -37,10 +38,15 @@ export const useTodoListStore = defineStore('todo-List', {
                         const task = this.todoList.find(object => object.id === itemID);
                         /* le tableau archive est mis à jour en ajoutant cet élément */
                         this.archiveList.unshift(task);
-                        /* le tableau todoList est mis à jour en supprimant cet élément */
+                        /* le tableau todoList est mis à jour en supprimant cet élément.
+                        ATTENTION ! La méthode .splice() prend en premier paramètre l'index du tableau
+                        OR l'index du tableau est différent de l'id de la tâche !! */
                         this.todoList.splice(task.id, 1);
                         /* la propriété "archived" sera passée à true */
                         task.archived = true;
+                        console.log(task.item);
+                        console.log(this.todoList);
+                        console.log(this.archiveList);
                 },
 
                 cancelArchiveItem(itemID) {

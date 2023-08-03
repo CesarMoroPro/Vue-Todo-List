@@ -35,5 +35,31 @@ function addItemAndClearInput(item) {
 </script>
 
 <style lang="scss" scoped>
+form {
+        min-width: 400px;
+        width: 100%;
 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        input, button {
+                border-radius: 6px;
+                outline: solid 1px #E9FB5F;
+                border: none;
+                height: 1.5rem;
+        }
+
+        input:focus, input:hover, button:hover {
+                outline: solid 3px #E9FB5F;
+        }
+
+        input {
+                width: 60%;
+        }
+
+        button {
+                width: 35%;
+        }
+}
 </style>
