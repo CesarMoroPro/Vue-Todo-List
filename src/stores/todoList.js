@@ -19,7 +19,6 @@ export const useTodoListStore = defineStore('todo-List', {
                                 completed: false,
                                 archived: false,
                         });
-                        console.log(this.todoList)
                 },
 
                 toggleCompleted(idToFind) {
@@ -33,27 +32,24 @@ export const useTodoListStore = defineStore('todo-List', {
                         }
                 },
 
-                archiveItem(itemID) {
+                archiveItem(itemID, taskIndex) {
                         /* Stocke dans une variable l'élément dont l'id correspond à l'id passé en argument */
                         const task = this.todoList.find(object => object.id === itemID);
                         /* le tableau archive est mis à jour en ajoutant cet élément */
                         this.archiveList.unshift(task);
                         /* le tableau todoList est mis à jour en supprimant cet élément.
-                        ATTENTION ! La méthode .splice() prend en premier paramètre l'index du tableau
-                        OR l'index du tableau est différent de l'id de la tâche !! */
-                        this.todoList.splice(task.id, 1);
+                        ATTENTION ! La méthode .splice() prend en premier paramètre l'INDEX du tableau
+                        OR l'index du tableau N'EST PAS ÉGAL à task.id !! */
+                        this.todoList.splice(taskIndex, 1);
                         /* la propriété "archived" sera passée à true */
                         task.archived = true;
-                        console.log(task.item);
-                        console.log(this.todoList);
-                        console.log(this.archiveList);
                 },
 
-                cancelArchiveItem(itemID) {
+                cancelArchiveItem(itemID, taskIndex) {
                         /* je bascule la tâche cliquée, du tableau "archive[]" vers le tableau "todoList[]" */
                         const task = this.archiveList.find(object => object.id === itemID);
                         this.todoList.unshift(task);
-                        this.archiveList.splice(task.id, 1);
+                        this.archiveList.splice(taskIndex, 1);
                         task.archived = false;
                 },
 
@@ -63,6 +59,7 @@ export const useTodoListStore = defineStore('todo-List', {
                                 /* retourne tous les objets dont l'id NE correspond PAS à l'id en argument */
                                 return object.id !== itemID;
                         })
+                        console.log(this.archiveList)
                 },
 
         }

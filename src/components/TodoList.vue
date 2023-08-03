@@ -3,12 +3,12 @@
                 <h2>Liste des tâches</h2>
         
                 <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
-                <div v-for="task in todoList" :key="task.id" >
+                <div v-for="task, index in todoList" :key="task.id" >
                         <div class="content">
                                 <span :class="{ completed: task.completed }">{{ task.item }}</span>
                                 <span class="icons" @click.stop="toggleCompleted(task.id)" v-show="!task.completed">[ Valider ]</span>
                                 <span class="icons" @click.stop="toggleCompleted(task.id)" v-show="task.completed">[ Annuler ]</span>
-                                <span class="icons" @click="archiveItem(task.id)" v-show="task.completed">[ Archiver ]</span>
+                                <span class="icons" @click="archiveItem(task.id, index)" v-show="task.completed">[ Archiver ]</span>
                         </div>
                 </div>
         </section>

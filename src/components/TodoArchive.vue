@@ -3,9 +3,9 @@
                 <h2 v-show="archiveList.length === 1">Tâche archivée</h2>
                 <h2 v-show="archiveList.length !== 1">Tâches archivées</h2>
 
-                <div v-for="task in archiveList" :key="task.id">
+                <div v-for="task, index in archiveList" :key="task.id">
                         <span>{{  task.item }}.</span>
-                        <span @click="cancelArchiveItem(task.id)">[ Désarchiver ]</span>
+                        <span @click="cancelArchiveItem(task.id, index)">[ Désarchiver ]</span>
                         <span @click="deleteItem(task.id)">[ Supprimer définitivement ]</span>
                 </div>
         </div>
