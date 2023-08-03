@@ -2,8 +2,10 @@
         <div>
                 <h2>Tâches archivées</h2>
 
-                <div v-for="todo in archive" :key="todo.id">
-                        <span>{{  todo.item }}</span>
+                <div v-for="archive in archiveList" :key="archive.id">
+                        <span>{{  archive.item }}</span>
+                        <span @click="cancelArchiveItem(archive.id)">[ Désarchiver ]</span>
+                        <span @click="deleteItem(archive.id)">[ Supprimer définitivement ]</span>
                 </div>
         </div>
 </template>
@@ -23,10 +25,10 @@ const store = useTodoListStore();
 /* Utilisation du destructuring pour extraire archive du store.
 Ici, storeToRefs crée des refs pour chaque state de store
 Donc archive contiendra tous les states */
-const { archive } = storeToRefs(store);
+const { archiveList } = storeToRefs(store);
 
-// import de l'action cancelArchive et deleteTask du store, via destructuring
-const { cancelArchive, deleteItem } = store; 
+// import de l'action cancelArchive et deleteItem du store, via destructuring
+const { cancelArchiveItem, deleteItem } = store;
 
 
 </script>
