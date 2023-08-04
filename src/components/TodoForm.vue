@@ -1,11 +1,11 @@
 <template>
         <div>
                 <!-- Création d'un formulaire avec un prevent.default -->
-                <!-- Au submit, déclenchement de la function addItemAndClearInput() -->
+                <!-- Au submit par la touche "entrée", déclenchement de la function addItemAndClearInput() dans ce fichier -->
                 <form @submit.prevent="addItemAndClearInput(todo)">
                         <!-- L'input doit stocker la valeur utilisateur dans une data, donc via un v-model -->
                         <input type="text" v-model="todo" />
-                        <Button :input-value="todo" />
+                        <Button :props-input-value="todo" />
                 </form>
 
                 <!-- Message de confirmation d'ajout d'une tâche -->
@@ -68,6 +68,8 @@ form {
 
         input {
                 width: 100%;
+                color: white;
+                padding: 2px;
         }
 
         button {

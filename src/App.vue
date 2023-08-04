@@ -17,6 +17,7 @@ body {
 
         h2 {
                 font-size: 1.75rem;
+                color: white;
         }
 }
 </style>

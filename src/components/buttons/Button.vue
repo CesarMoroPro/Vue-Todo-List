@@ -2,7 +2,7 @@
         <!-- Au submit, déclenchement de la function addItemAndClearInput() -->
         <v-btn 
                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                @click="addItemAndClearInput(inputValue)"
+                @click="addItemAndClearInput(propsInputValue)"
         >
                 Ajouter la tâche
         </v-btn>
@@ -16,31 +16,37 @@ import { useTodoListStore } from '@/stores/todoList.js';
 const store = useTodoListStore();
 
 // Import de { defineProps, refs } afin d'utiliser des props et qu'elles soient réactives
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 /* Définition des props */
 const props = defineProps({
-        inputValue: String,
+        propsInputValue: String,
 })
+/* Je peux maintenant utiliser "propsInputValue" dans mon template */
+/* ET "input-value" en attribut lors de l'appel de ce composant.
+"props-input-value" en HTML correspond à "propsInputValue" dans le script.
+"propsInputValue" = valeur brute, reçue lors de l'appel du composant */
 
-function addItemAndClearInput(item) {
-        if (item.length === 0) {
+/* Définition d'une variable réactive pour la props "propsInputValue" pour changer sa valeur en " " après soumission.
+Si besoin de modifier la valeur d'une prop à l'intérieur du composant,
+il faut la copier dans une variable réactive (utilisant ref) et travailler avec cette variable à la place. */
+const refPropsInputValue = ref(props.propsInputValue);
+
+function addItemAndClearInput(string) {
+        if (string.length === 0) {
                 return
         } else {
                 /* Ici, on appelle "addItem()" qui est définie dans le store */
-                store.addItem(item);
-                item = "";
+                store.addItem(string);
+                console.log(refPropsInputValue);
+                refPropsInputValue.value = "";
         }
 }
 
 
 
  // Ce commentaire concerne les props avec ref :
-/* Et, pour que la valeur soit réactive, je dois utiliser "ref()" */
-// const propsInputValue = ref(props.inputValue);
-/* Je peux maintenant utiliser "propsInputValue" dans mon template */
-/* ET "input-value" en attribut lors de l'appel de ce composant.
-"input-value" en HTML correspond à "inputValue" dans le script.
-"inputValue" = valeur brute, reçue par lors de l'appel du composant 
+/* Et, pour que la valeur soit réactive, je dois utiliser "ref()"
+
 ET "propsInputValue" = traitement de "inputValue" pour en faire une reactive. */
 </script>
 
