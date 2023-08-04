@@ -4,8 +4,8 @@
                 <!-- Au submit, déclenchement de la function addItemAndClearInput() -->
                 <form @submit.prevent="addItemAndClearInput(todo)">
                         <!-- L'input doit stocker la valeur utilisateur dans une data, donc via un v-model -->
-                        <input type="text" v-model="todo"/>
-                        <v-btn variant="outlined" elevation="4" size="x-large" :ripple="true">Button</v-btn>
+                        <input type="text" v-model="todo" />
+                        <Button :input-value="todo" />
                 </form>
 
                 <!-- Message de confirmation d'ajout d'une tâche -->
@@ -16,6 +16,9 @@
 </template>
 
 <script setup>
+// import de SFC
+import Button from '@/components/buttons/Button.vue';
+
 // Import de { refs } afin que la data "todo" du v-model soit réactive
 import { ref } from "vue";
 // Puisqu'on fait appel à une fonction qui est dans le store, on doit importer ce store
@@ -34,6 +37,7 @@ function addItemAndClearInput(item) {
         if (item.length === 0) {
                 return
         } else {
+                /* Ici, on appelle addItem qui se trouve dans le store */
                 store.addItem(item);
                 todo.value = '';
         }
@@ -48,8 +52,8 @@ form {
         width: 100%;
 
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
 
         input, button {
                 border-radius: 6px;
@@ -63,12 +67,12 @@ form {
         }
 
         input {
-                width: 60%;
+                width: 100%;
         }
 
         button {
-                width: 35%;
                 color: white;
+                margin-top: 10px;
         }
 
         button:hover {

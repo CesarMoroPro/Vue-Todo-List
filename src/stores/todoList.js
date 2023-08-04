@@ -59,7 +59,6 @@ export const useTodoListStore = defineStore('todo-List', {
                                 /* retourne tous les objets dont l'id NE correspond PAS à l'id en argument */
                                 return object.id !== itemID;
                         })
-                        console.log(this.archiveList)
                 },
 
         }
