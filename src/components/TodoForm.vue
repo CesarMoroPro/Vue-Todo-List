@@ -5,27 +5,26 @@
                 <form @submit.prevent="addItemAndClearInput(todo)">
                         <!-- L'input doit stocker la valeur utilisateur dans une data, donc via un v-model -->
                         <input type="text" v-model="todo" />
+                        <!-- Message de confirmation d'ajout d'une tâche -->
+                        <div id="add-item-success-message">
+                                <AddTaskMessage />
+                        </div>
                         <Button :props-input-value="todo" />
                 </form>
 
-                <!-- Message de confirmation d'ajout d'une tâche -->
-                <div id="add-item-success-message">
-                        <AddTaskMessage />
-                </div>
         </div>
 </template>
 
 <script setup>
 // import de SFC
 import Button from '@/components/buttons/Button.vue';
+import AddTaskMessage from '@/components/messages/AddTaskMessage.vue';
 
 // Import de { refs } afin que la data "todo" du v-model soit réactive
 import { ref } from "vue";
 // Puisqu'on fait appel à une fonction qui est dans le store, on doit importer ce store
 import { useTodoListStore } from '@/stores/todoList.js';
 
-// Import du composant AddTaskMessage
-import AddTaskMessage from '@/components/messages/AddTaskMessage.vue';
 
 // Définition de la const todo qui est bindée par v-model
 const todo = ref('');
@@ -39,10 +38,11 @@ function addItemAndClearInput(item) {
         } else {
                 /* Ici, on appelle addItem qui se trouve dans le store */
                 store.addItem(item);
-                todo.value = '';
+                store.addSuccessMessage();
+                
+                todo.value = ''; 
         }
 }
-
 
 </script>
 

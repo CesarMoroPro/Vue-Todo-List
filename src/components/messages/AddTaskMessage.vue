@@ -1,19 +1,30 @@
 <template>
-                <p v-show="success">La tâche a été ajoutée à la liste.</p>
+                <p class="success-alert" v-show="successAddTask" >{{ successMessage }}</p>
 </template>
 
-<script>
-export default {
-        setup() {
-                const success = false;
+<script setup>
+// Import du store useTodoListStore
+import { useTodoListStore } from "@/stores/todoList.js";
+// Import de storeToRefs pour garantir les Reactive Properties
+import { storeToRefs } from "pinia";
 
-                return { success };
-        }
-}
+// Stockage de tout le store dans une variable
+const store = useTodoListStore();
+
+const successMessage = "La tâche a été ajoutée à la liste."
+
+/* Je rend accessible la state "successAddTask", avec storeToRefs puisque c'est une state et non une action */
+const { successAddTask } = storeToRefs(store);
 
 </script>
 
 <style lang="scss" scoped>
-
-
+.success-alert {
+        margin-top: 10px;
+        padding: 5px;
+        color: #247013;
+        outline: solid 1px #97E786;
+        border-radius: 6px;
+        background-color: rgba(#97E786, 0.3);
+}
 </style>

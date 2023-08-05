@@ -37,17 +37,10 @@ function addItemAndClearInput(string) {
         } else {
                 /* Ici, on appelle "addItem()" qui est définie dans le store */
                 store.addItem(string);
-                console.log(refPropsInputValue);
+                store.addSuccessMessage();
                 refPropsInputValue.value = "";
         }
 }
-
-
-
- // Ce commentaire concerne les props avec ref :
-/* Et, pour que la valeur soit réactive, je dois utiliser "ref()"
-
-ET "propsInputValue" = traitement de "inputValue" pour en faire une reactive. */
 </script>
 
 <style lang="scss" scoped>
