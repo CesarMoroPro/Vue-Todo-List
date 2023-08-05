@@ -33,11 +33,12 @@ const refPropsInputValue = ref(props.propsInputValue);
 
 function addItemAndClearInput(string) {
         if (string.length === 0) {
-                return
+                store.addTaskMessage("error");
+                return;
         } else {
                 /* Ici, on appelle "addItem()" qui est définie dans le store */
                 store.addItem(string);
-                store.addSuccessMessage();
+                store.addTaskMessage("success");
                 refPropsInputValue.value = "";
         }
 }

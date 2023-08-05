@@ -7,6 +7,7 @@ export const useTodoListStore = defineStore('todo-List', {
                 id: 0,
                 archiveList: [],
                 successAddTask: false,
+                errorAddTask: false,
         }),
 
         // getters
@@ -22,11 +23,18 @@ export const useTodoListStore = defineStore('todo-List', {
                         });
                 },
 
-                addSuccessMessage() {
-                        this.successAddTask = true;
-                        setTimeout( () => {
-                                this.successAddTask = false;
-                        }, 2000);
+                addTaskMessage(errorOrSuccess) {
+                        if (errorOrSuccess === "error") {
+                                this.errorAddTask = true;
+                                setTimeout( () => {
+                                        this.errorAddTask = false;
+                                }, 2000);
+                        } else if (errorOrSuccess === "success") {
+                                this.successAddTask = true;
+                                setTimeout( () => {
+                                        this.successAddTask = false;
+                                }, 2000);
+                        }
                 },
 
                 toggleCompleted(idToFind) {

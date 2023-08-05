@@ -38,7 +38,7 @@ function addItemAndClearInput(item) {
         } else {
                 /* Ici, on appelle addItem qui se trouve dans le store */
                 store.addItem(item);
-                store.addSuccessMessage();
+                store.addTaskMessage();
                 
                 todo.value = ''; 
         }
