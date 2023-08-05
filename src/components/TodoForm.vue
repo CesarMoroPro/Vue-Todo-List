@@ -5,10 +5,12 @@
                 <form @submit.prevent="addItemAndClearInput(todo)">
                         <!-- L'input doit stocker la valeur utilisateur dans une data, donc via un v-model -->
                         <input type="text" v-model="todo" />
+
                         <!-- Message de confirmation d'ajout d'une tâche -->
                         <div id="add-item-success-message">
                                 <AddTaskMessage />
                         </div>
+
                         <Button :props-input-value="todo" />
                 </form>
 
@@ -32,15 +34,15 @@ const todo = ref('');
 À partir de là, on a accès aux states, actions et getters du store useTodoListStore */
 const store = useTodoListStore();
 
-function addItemAndClearInput(item) {
-        if (item.length === 0) {
-                return
+function addItemAndClearInput(string) {
+        if (string.length === 0) {
+                store.addTaskMessage("error");
+                return;
         } else {
-                /* Ici, on appelle addItem qui se trouve dans le store */
-                store.addItem(item);
-                store.addTaskMessage();
-                
-                todo.value = ''; 
+                /* Ici, on appelle "addItem()" qui est définie dans le store */
+                store.addItem(string);
+                store.addTaskMessage("success");
+                todo.value = "";
         }
 }
 
