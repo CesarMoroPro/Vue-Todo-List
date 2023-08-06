@@ -20,6 +20,7 @@ export const useTodoListStore = defineStore('todo-List', {
                                 id: this.id++,
                                 completed: false,
                                 archived: false,
+                                displayConfirmationDeleteMessage: false,
                         });
                 },
 
@@ -69,12 +70,33 @@ export const useTodoListStore = defineStore('todo-List', {
                         task.archived = false;
                 },
 
-                deleteItem(itemID) {
+                askConfirmationDeletion(itemID) {
+                        /* Dans le tableau archiveList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
+                        alors je stocke cet élément dans la constante task */
+                        const task = this.archiveList.find(objectElement => objectElement.id === itemID);
+                        // si "task" existe
+                        if(task) {
+                                /* alors la valeur de sa propriété displayConfirmationDeleteMessage vaut true */
+                                task.displayConfirmationDeleteMessage = true;
+                        }
+                },
+
+                cancelDeleteTask(itemID) {
+                        /* Raisonnement inverse de "askConfirmationDeletion()" */
+                        const task = this.archiveList.find(objectElement => objectElement.id === itemID);
+                        if (task) {
+                                task.displayConfirmationDeleteMessage = false;
+                        }
+                },
+
+                deleteTask(itemID) {
                         /* le tableau todoList sera mise à jour selon le filtre : */
                         this.archiveList = this.archiveList.filter(object => {
                                 /* retourne tous les objets dont l'id NE correspond PAS à l'id en argument */
                                 return object.id !== itemID;
                         })
+                        /* Le booléen confirmationDeleteMessage doit revenir à fasle */
+                        this.confirmationDeleteMessage = false;
                 },
 
         }

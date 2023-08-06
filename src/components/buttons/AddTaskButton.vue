@@ -2,7 +2,7 @@
         <!-- Au submit, déclenchement de la function addItemAndClearInput() -->
         <v-btn 
                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                @click="addItemAndClearInput(propsInputValue)"
+                @click="addItemAndClearInputAndDisplayMessage(propsInputValue)"
         >
                 Ajouter la tâche
         </v-btn>
@@ -31,7 +31,7 @@ Si besoin de modifier la valeur d'une prop à l'intérieur du composant,
 il faut la copier dans une variable réactive (utilisant ref) et travailler avec cette variable à la place. */
 const refPropsInputValue = ref(props.propsInputValue);
 
-function addItemAndClearInput(string) {
+function addItemAndClearInputAndDisplayMessage(string) {
         if (string.length === 0) {
                 store.addTaskMessage("error");
                 return;
