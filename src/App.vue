@@ -19,5 +19,20 @@ body {
                 font-size: 1.75rem;
                 color: white;
         }
+
+        /* Classes des icônes pour la todo-list et la liste de tâches archivées */
+        .icons-tasks-name, .icons-tasks-buttons {
+                color: white;
+        }
+
+        .icons-tasks-name {
+                margin-right: 15px;
+        }
+
+        .all-icons-for-one-task {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 8px;
+                }
 }
 </style>

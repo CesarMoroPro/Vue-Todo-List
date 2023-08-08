@@ -1,13 +1,19 @@
 <template>
-        <div>
+        <div v-if="archiveList.length > 0">
+        
                 <h2 v-show="archiveList.length === 1">Tâche archivée</h2>
                 <h2 v-show="archiveList.length !== 1">Tâches archivées</h2>
 
                 <div v-for="archivedTask in archiveList" :key="archivedTask.id">
-                        <span>{{  archivedTask.item }}.</span>
-                        <span @click="cancelArchiveItem(archivedTask.id)">[ Désarchiver ]</span>
-                        <span @click="askConfirmationDeletion(archivedTask.id)">[ Supprimer définitivement ]</span>
-                        <AddConfirmationMessage v-show="archivedTask.displayConfirmationDeleteMessage" :targetArchivedTask="archivedTask.id"/>
+                        <div class="name-task">
+                                <span>{{  archivedTask.item }}.</span>
+                        </div>
+
+                        <div class="all-icons-for-one-task">
+                                <span class="icons-tasks-buttons" @click="cancelArchiveItem(archivedTask.id)"><font-awesome-icon :icon="['fas', 'backward-fast']" /></span>
+                                <span class="icons-tasks-buttons" @click="askConfirmationDeletion(archivedTask.id)"><font-awesome-icon :icon="['far', 'trash-can']" /></span>
+                                <AddConfirmationMessage v-show="archivedTask.displayConfirmationDeleteMessage" :targetArchivedTask="archivedTask.id"/>
+                        </div>
                 </div>
         </div>
 </template>
