@@ -77,10 +77,12 @@ form {
         button {
                 color: white;
                 margin-top: 10px;
+                font-weight: 700;
         }
 
         button:hover {
                 color: #E9FB5F;
+                font-weight: 300;
         }
 }
 

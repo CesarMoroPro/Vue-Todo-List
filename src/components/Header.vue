@@ -19,9 +19,14 @@ header {
         align-items: center;
         margin-bottom: 50px;
 
+        h1 {
+                font-weight: 500;
+        }
+
         .connexion-button {
                 color: white;
                 text-decoration: underline;
+                font-weight: 100;
         }
         .main-title {
                 font-size: 3rem;

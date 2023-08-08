@@ -1,10 +1,16 @@
 <template>
-        <div v-if="archiveList.length > 0">
+        <div 
+                class="all-tasks"
+                v-if="archiveList.length > 0"
+        >
         
                 <h2 v-show="archiveList.length === 1">Tâche archivée</h2>
                 <h2 v-show="archiveList.length !== 1">Tâches archivées</h2>
 
-                <div v-for="archivedTask in archiveList" :key="archivedTask.id">
+                <div 
+                        class="one-task" 
+                        v-for="archivedTask in archiveList" :key="archivedTask.id"
+                >
                         <div class="name-task">
                                 <span>{{  archivedTask.item }}.</span>
                         </div>
@@ -41,3 +47,18 @@ const { cancelArchiveItem, askConfirmationDeletion } = store;
 
 
 </script>
+
+<style lang="scss" scoped>
+.all-tasks {
+        width: 50%;
+        margin-right: 5%;
+        display: flex;
+        flex-direction: column;
+        .one-task {     
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+        }
+}
+
+</style>

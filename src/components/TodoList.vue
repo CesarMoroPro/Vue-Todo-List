@@ -1,4 +1,5 @@
 <template>
+        <!-- "archiveList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
         <section 
                 class="all-tasks" 
                 :class="archiveList.length === 0 ? 'all-tasks-full' : 'all-tasks-middle'"
@@ -6,19 +7,32 @@
                 <h2>Liste des tâches</h2>
         
                 <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
-                <div v-for="task, index in todoList" :key="task.id" >
-                        <div class="one-task">
+                <div 
+                class="one-task" 
+                v-for="task, index in todoList" :key="task.id"
+                >
                                 <div class="name-task">
-                                        <span :class="{ completed: task.completed }"><font-awesome-icon class="icons-tasks-name" :icon="['fas', 'arrow-right']" />{{ task.item }}</span>
+                                        <span 
+                                                v-show="!task.completed"
+                                                @click.stop="toggleCompleted(task.id)"
+                                        >
+                                                <font-awesome-icon class="icons-tasks-name" :icon="['far', 'square']" />
+                                                {{ task.item }}
+                                        </span>
+
+                                        <span 
+                                                v-show="task.completed"
+                                                class="completed"
+                                        >
+                                                <font-awesome-icon class="icons-tasks-name" :icon="['far', 'square-check']" />
+                                                {{ task.item }}
+                                        </span>
                                 </div>
 
                                 <div class="all-icons-for-one-task">
-                                        <span class="icons-tasks-buttons" @click.stop="toggleCompleted(task.id)" v-show="!task.completed"><font-awesome-icon :icon="['far', 'square']" /></span>
-                                        <span class="icons-tasks-buttons" @click.stop="toggleCompleted(task.id)" v-show="task.completed"><font-awesome-icon :icon="['far', 'square-check']" /></span>
                                         <span class="icons-tasks-buttons" @click.stop="toggleCompleted(task.id)" v-show="task.completed"><font-awesome-icon :icon="['fas', 'arrow-rotate-left']" /></span>
                                         <span class="icons-tasks-buttons" @click="archiveItem(task.id, index)" v-show="task.completed"><font-awesome-icon :icon="['fas', 'box-archive']" /></span>
                                 </div>
-                        </div>
                 </div>
         </section>
 </template>
