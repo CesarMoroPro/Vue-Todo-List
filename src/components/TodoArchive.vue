@@ -12,20 +12,28 @@
                         v-for="archivedTask in archiveList" :key="archivedTask.id"
                 >
                         <div class="container">
-                                <div class="name-task">
-                                        <span>{{  archivedTask.item }}.</span>
+                                <div 
+                                        class="container__task"
+                                        v-show="!archivedTask.displayConfirmationDeleteMessage"
+                                >
+                                        <div class="name-task">
+                                                <span>{{  archivedTask.item }}</span>
+                                        </div>
+                
+                                        <div class="all-icons-for-one-task">
+                                                <span class="icons-tasks-buttons" @click="cancelArchiveItem(archivedTask.id)"><font-awesome-icon :icon="['fas', 'backward-fast']" /></span>
+                                                <span class="icons-tasks-buttons" @click="askConfirmationDeletion(archivedTask.id)"><font-awesome-icon :icon="['far', 'trash-can']" /></span>
+                                        </div>
                                 </div>
         
-                                <div class="all-icons-for-one-task">
-                                        <span class="icons-tasks-buttons" @click="cancelArchiveItem(archivedTask.id)"><font-awesome-icon :icon="['fas', 'backward-fast']" /></span>
-                                        <span class="icons-tasks-buttons" @click="askConfirmationDeletion(archivedTask.id)"><font-awesome-icon :icon="['far', 'trash-can']" /></span>
+                                <div class="container__message">
+                                        <AddConfirmationMessage 
+                                                v-show="archivedTask.displayConfirmationDeleteMessage"
+                                                :targetArchivedTaskID="archivedTask.id"
+                                                :targetArchivedTaskContent="archivedTask.item"
+                                                class="confirmation-message"
+                                        />
                                 </div>
-        
-                                <AddConfirmationMessage 
-                                        v-show="archivedTask.displayConfirmationDeleteMessage"
-                                        :targetArchivedTask="archivedTask.id"
-                                        class="confirmation-message"
-                                />
                         </div>
                 </div>
 
@@ -67,11 +75,17 @@ const { cancelArchiveItem, askConfirmationDeletion } = store;
         flex-direction: column;
         .one-task {     
                 margin-top: 20px;
-                .container {
+                margin-bottom: 20px;
+                .container__task {
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
-                        margin-bottom: 20px;
+
+                }
+
+                .container__message {
+                        position: relative;
+                        z-index: 1;
                 }
         }
 }

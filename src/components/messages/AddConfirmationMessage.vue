@@ -1,18 +1,18 @@
 <template>
         <div class="ask-confirmation">
-                        <p class="confirmation-message">"Voulez-vous vraiment supprimer cette tâche ? La suppression est définitive."</p>
+                        <p class="confirmation-message">Voulez-vous vraiment supprimer la tâche <span class="important-task-content">{{ targetArchivedTaskContent }}</span> ? La suppression est définitive.</p>
                 
                 <div class="buttons">
                         <v-btn 
                                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                                @click="cancelDeleteTask(targetArchivedTask)"
+                                @click="cancelDeleteTask(targetArchivedTaskID)"
                         >
                                 NON
                         </v-btn>
                 
                         <v-btn 
                                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                                @click="deleteTask(targetArchivedTask)"
+                                @click="deleteTask(targetArchivedTaskID)"
                         >
                                 OUI
                         </v-btn>
@@ -33,7 +33,8 @@ const store = useTodoListStore();
 
 // Je définis la props qui recevra l'id de la tâche depuis le SFC TodoArchive.vue
 const props = defineProps({
-        targetArchivedTask: Number,
+        targetArchivedTaskID: Number,
+        targetArchivedTaskContent: String,
 });
 
 /* Je rends accessible la state "archiveList", avec storeToRefs puisque c'est une state et non une action */
@@ -46,6 +47,11 @@ const { deleteTask, cancelDeleteTask } = store;
 <style lang="scss" scoped>
 .ask-confirmation {
         text-align: center;
+
+        .important-task-content {
+                font-weight: bold;
+                color: white;
+        }
 }
 .buttons {
         display: flex;
