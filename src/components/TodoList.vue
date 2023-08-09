@@ -4,7 +4,7 @@
                 class="all-tasks" 
                 :class="archiveList.length === 0 ? 'all-tasks-full' : 'all-tasks-middle'"
         >
-                <h2>Liste des tâches</h2>
+                <h2>Liste des tâches ({{ todoList.length }})</h2>
         
                 <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
                 <div 

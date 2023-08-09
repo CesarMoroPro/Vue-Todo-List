@@ -4,8 +4,8 @@
                 v-if="archiveList.length > 0"
         >
         
-                <h2 v-show="archiveList.length === 1">Tâche archivée</h2>
-                <h2 v-show="archiveList.length !== 1">Tâches archivées</h2>
+                <h2 v-show="archiveList.length === 1">{{ archiveList.length }} tâche archivée</h2>
+                <h2 v-show="archiveList.length !== 1">{{ archiveList.length }} tâches archivées</h2>
 
                 <div 
                         class="one-task" 
