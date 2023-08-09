@@ -11,20 +11,31 @@
                         class="one-task" 
                         v-for="archivedTask in archiveList" :key="archivedTask.id"
                 >
-                        <div class="name-task">
-                                <span>{{  archivedTask.item }}.</span>
-                        </div>
-
-                        <div class="all-icons-for-one-task">
-                                <span class="icons-tasks-buttons" @click="cancelArchiveItem(archivedTask.id)"><font-awesome-icon :icon="['fas', 'backward-fast']" /></span>
-                                <span class="icons-tasks-buttons" @click="askConfirmationDeletion(archivedTask.id)"><font-awesome-icon :icon="['far', 'trash-can']" /></span>
-                                <AddConfirmationMessage v-show="archivedTask.displayConfirmationDeleteMessage" :targetArchivedTask="archivedTask.id"/>
+                        <div class="container">
+                                <div class="name-task">
+                                        <span>{{  archivedTask.item }}.</span>
+                                </div>
+        
+                                <div class="all-icons-for-one-task">
+                                        <span class="icons-tasks-buttons" @click="cancelArchiveItem(archivedTask.id)"><font-awesome-icon :icon="['fas', 'backward-fast']" /></span>
+                                        <span class="icons-tasks-buttons" @click="askConfirmationDeletion(archivedTask.id)"><font-awesome-icon :icon="['far', 'trash-can']" /></span>
+                                </div>
+        
+                                <AddConfirmationMessage 
+                                        v-show="archivedTask.displayConfirmationDeleteMessage"
+                                        :targetArchivedTask="archivedTask.id"
+                                        class="confirmation-message"
+                                />
                         </div>
                 </div>
+
+                <HorizontalSeparator />
         </div>
 </template>
 
 <script setup>
+import HorizontalSeparator from "./visuals/HorizontalSeparator.vue";
+
 // Import du store useTodoListStore
 import { useTodoListStore } from "@/stores/todoList.js";
 
@@ -55,9 +66,13 @@ const { cancelArchiveItem, askConfirmationDeletion } = store;
         display: flex;
         flex-direction: column;
         .one-task {     
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
+                margin-top: 20px;
+                .container {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        margin-bottom: 20px;
+                }
         }
 }
 
