@@ -5,6 +5,7 @@ export const useTodoListStore = defineStore('todo-List', {
         state: () => ({
                 todoList: [],
                 id: 0,
+                completedTasksArray: [],
                 archiveList: [],
                 successAddTask: false,
                 errorAddTask: false,
@@ -22,6 +23,7 @@ export const useTodoListStore = defineStore('todo-List', {
                                 archived: false,
                                 displayConfirmationDeleteMessage: false,
                         });
+                        console.log(this.completedTasksArray)
                 },
 
                 addTaskMessage(errorOrSuccess) {
@@ -42,10 +44,24 @@ export const useTodoListStore = defineStore('todo-List', {
                         /* Dans le tableau todoList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
                         alors je stocke cet élément dans la constante task */
                         const task = this.todoList.find(object => object.id === idToFind);
-                        // si "todo" existe
+                        // si "task" existe
                         if(task) {
-                                // alors la nouvelle valeur de completed est son contraire
+                                // alors la nouvelle valeur de completed devient son contraire
                                 task.completed = !task.completed;
+                                // Je déclenche une méthode pour ajouter ou retirer la tâche du tableau des tâches terminées mais non archivées
+                                this.addOrRemoveFromCompletedTasksArray(task);
+                        }
+                },
+
+                addOrRemoveFromCompletedTasksArray(task) {
+                        /* Si la propriété "completed" d'une tâche est à true */
+                        if(task.completed) {
+                                /* alors j'ajoute cette tâche dans le tableau des tâches terminées */
+                                this.completedTasksArray.push(task);
+                        } else {
+                                /* sinon, je retire cette tâche du tableau avce splice (qui utilise l'index du tableau, différent de l'index du tableau todoList !) */
+                                const taskToUncompleteID = this.completedTasksArray.findIndex(object => object.id === task.id);
+                                this.completedTasksArray.splice(taskToUncompleteID, 1); 
                         }
                 },
 
