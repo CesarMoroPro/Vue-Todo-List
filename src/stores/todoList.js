@@ -86,6 +86,15 @@ export const useTodoListStore = defineStore('todo-List', {
                         this.todoList.splice(taskIndex, 1);
                         /* la propriété "archived" sera passée à true */
                         task.archived = true;
+
+                        /* Quand une tâche passe en "archivée", elle ne doit plus être calculée dans le pourcentage d'avancement de la TodoList.
+                        Je commence par récupérer l'index de la tâche dans le tableau "completedTasksArray" */
+                        const taskToUncompleteID = this.completedTasksArray.findIndex(object => object.id === itemID);
+                        /* Puis je supprime cette tâche du tableau "completedTasksArray" */
+                        this.completedTasksArray.splice(taskToUncompleteID, 1);
+                        /* Je relance le calcul d'avancement (pourcentage) des tâches */
+                        this.percentageTasksProgression();
+                        
                 },
 
                 cancelArchiveItem(itemID, taskIndex) {
