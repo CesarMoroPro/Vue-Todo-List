@@ -9,7 +9,7 @@
 
                 <div 
                         class="one-task" 
-                        v-for="archivedTask in archiveList" :key="archivedTask.id"
+                        v-for="archivedTask, indexInArchiveList in archiveList" :key="archivedTask.id"
                 >
                         <div class="container">
                                 <div 

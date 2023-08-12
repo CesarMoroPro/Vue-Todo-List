@@ -25,6 +25,8 @@ export const useTodoListStore = defineStore('todo-List', {
                                 displayConfirmationDeleteMessage: false,
                         });
                         // console.log(this.completedTasksArray)
+                /* Je mets à jour l'avancement des tâches */
+                this.percentageTasksProgression();
                 },
 
                 addTaskMessage(errorOrSuccess) {
@@ -72,7 +74,6 @@ export const useTodoListStore = defineStore('todo-List', {
 
                 percentageTasksProgression() {
                         this.tasksProgression = Math.round((this.completedTasksArray.length * 100 / this.todoList.length));
-                        console.log(this.tasksProgression)
                 },
 
                 archiveItem(itemID, taskIndex) {
@@ -97,12 +98,25 @@ export const useTodoListStore = defineStore('todo-List', {
                         
                 },
 
-                cancelArchiveItem(itemID, taskIndex) {
-                        /* je bascule la tâche cliquée, du tableau "archive[]" vers le tableau "todoList[]" */
+                cancelArchiveItem(itemID) {
+                        /* Je bascule la tâche cliquée, du tableau "archive[]" vers le tableau "todoList[]".
+                        Pour celà, je récupère l'objet dont la propriété "id" correspond à l''id" fourni en argument */
                         const task = this.archiveList.find(object => object.id === itemID);
+                        /* Et j'ajoute cet objet au tableau "todoList" */
                         this.todoList.unshift(task);
+                        /* Puis je récupère l'index dans le tableau ARCHIVELIST de l'objet dont la propriété "id" correpond à l'"id" passé en argument  */
+                        const taskIndex = this.archiveList.findIndex(object => object.id === itemID);
+                        /* Et je fourni cet index pour splice dans ce tableau */
                         this.archiveList.splice(taskIndex, 1);
+                        /* la propriété "archived" de la task devient alors : false */
                         task.archived = false;
+
+                        /* Quand une tâche n'est finalement plus archivée et remise dans la todoList,
+                        alors par défaut elle est déjà en "completed: true".
+                        Donc le tableau "completedTasksArray" doit être remis à jour avec cette tâche */
+                        this.completedTasksArray.push(task);
+                        /* Il faut donc que le calcul d'avancement des tâches soit mis à jour */
+                        this.percentageTasksProgression();
                 },
 
                 askConfirmationDeletion(itemID) {
