@@ -6,6 +6,7 @@ export const useTodoListStore = defineStore('todo-List', {
                 todoList: [],
                 id: 0,
                 completedTasksArray: [],
+                tasksProgression: 0,
                 archiveList: [],
                 successAddTask: false,
                 errorAddTask: false,
@@ -23,7 +24,7 @@ export const useTodoListStore = defineStore('todo-List', {
                                 archived: false,
                                 displayConfirmationDeleteMessage: false,
                         });
-                        console.log(this.completedTasksArray)
+                        // console.log(this.completedTasksArray)
                 },
 
                 addTaskMessage(errorOrSuccess) {
@@ -59,10 +60,19 @@ export const useTodoListStore = defineStore('todo-List', {
                                 /* alors j'ajoute cette tâche dans le tableau des tâches terminées */
                                 this.completedTasksArray.push(task);
                         } else {
-                                /* sinon, je retire cette tâche du tableau avce splice (qui utilise l'index du tableau, différent de l'index du tableau todoList !) */
+                                /* sinon, je retire cette tâche du tableau avce splice 
+                                qui utilise l'index du tableau completedTasksArray, différent de l'index du tableau todoList !)
+                                Donc il faut trouver l'index de la tâche concernée pour fournir cet index dans la fonction splice */
                                 const taskToUncompleteID = this.completedTasksArray.findIndex(object => object.id === task.id);
                                 this.completedTasksArray.splice(taskToUncompleteID, 1); 
                         }
+
+                        this.percentageTasksProgression();
+                },
+
+                percentageTasksProgression() {
+                        this.tasksProgression = Math.round((this.completedTasksArray.length * 100 / this.todoList.length));
+                        console.log(this.tasksProgression)
                 },
 
                 archiveItem(itemID, taskIndex) {

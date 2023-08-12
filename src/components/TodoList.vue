@@ -5,7 +5,7 @@
                 :class="archiveList.length === 0 ? 'all-tasks-full' : 'all-tasks-middle'"
         >
                 <h2>Liste des tâches <span v-show="todoList.length > 0">({{ todoList.length }})</span></h2>
-                <span>Tâches terminées : {{ completedTasksArray.length }} / {{todoList.length }} soit</span>
+                <span>Tâches terminées : {{ completedTasksArray.length }} / {{todoList.length }} soit {{ tasksProgression }} %</span>
         
                 <!-- "todoList" est importée grâce au store "useTodoListStore" dans "/stores/todoList.js" -->
                 <div 
@@ -61,7 +61,7 @@ const store = useTodoListStore();
 Ici, storeToRefs crée des refs pour chaque state de store
 Donc todoList contiendra tous les states */
 /* J'ai besoin d'archiveList également pour la classe conditionnelle */
-const { todoList, archiveList, completedTasksArray } = storeToRefs(store);
+const { todoList, completedTasksArray, tasksProgression, archiveList } = storeToRefs(store);
 
 // import de l'action toggleCompleted du store, via destructuring
 const { toggleCompleted, archiveItem } = store; 
