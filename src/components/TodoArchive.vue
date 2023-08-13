@@ -1,7 +1,7 @@
 <template>
         <div 
                 class="all-tasks"
-                v-if="archiveList.length > 0"
+                v-show="archiveList.length > 0"
         >
         
                 <h2 v-show="archiveList.length === 1">{{ archiveList.length }} tâche archivée</h2>
@@ -10,6 +10,7 @@
                 <div 
                         class="one-task" 
                         v-for="archivedTask, indexInArchiveList in archiveList" :key="archivedTask.id"
+                        v-show="!displayConfirmationDeleteAllArchivedTasks"
                 >
                         <div class="container">
                                 <div 
@@ -27,7 +28,7 @@
                                 </div>
         
                                 <div class="container__message">
-                                        <AddConfirmationMessage 
+                                        <AddConfirmationDeletionOneArchivedTask
                                                 v-show="archivedTask.displayConfirmationDeleteMessage"
                                                 :targetArchivedTaskID="archivedTask.id"
                                                 :targetArchivedTaskContent="archivedTask.item"
@@ -35,13 +36,30 @@
                                         />
                                 </div>
                         </div>
+
+                        <HorizontalSeparator />
                 </div>
 
-                <HorizontalSeparator />
+                <div v-show="!displayConfirmationDeleteAllArchivedTasks" class="delete-all-archived-tasks-span">
+                        <span>Supprimer toutes les tâches archivées ?</span>
+                        <br>
+                        <font-awesome-icon 
+                                :icon="['fas', 'explosion']" 
+                                class="icons-tasks-buttons delete-all-archived-tasks"
+                                @click="askConfirmationDeletionAllArchivedTasks()"
+                        />
+                </div>
+
+                <AddConfirmationDeletionAllArchivedTasks
+                        v-show="displayConfirmationDeleteAllArchivedTasks"
+                        class="confirmation-message"
+                />
         </div>
 </template>
 
 <script setup>
+import AddConfirmationDeletionAllArchivedTasks from "./messages/AddConfirmationDeletionAllArchivedTasks.vue";
+import AddConfirmationDeletionOneArchivedTask from "./messages/AddConfirmationDeletionOneArchivedTask.vue";
 import HorizontalSeparator from "./visuals/HorizontalSeparator.vue";
 
 // Import du store useTodoListStore
@@ -51,7 +69,6 @@ import { useTodoListStore } from "@/stores/todoList.js";
 Cette méthode permet de ramener et utiliser les propriétés du store (donc les states)
 tout en garantissant la réactivité de chaque propriété */
 import { storeToRefs } from 'pinia';
-import AddConfirmationMessage from "./messages/AddConfirmationMessage.vue";
 
 // Définition d'une constante stockant le store
 const store = useTodoListStore();
@@ -59,10 +76,10 @@ const store = useTodoListStore();
 /* Utilisation du destructuring pour extraire archive du store.
 Ici, storeToRefs crée des refs pour chaque state de store
 Donc archive contiendra tous les states */
-const { archiveList } = storeToRefs(store);
+const { archiveList, displayConfirmationDeleteAllArchivedTasks } = storeToRefs(store);
 
-// import de l'action cancelArchive et deleteItem du store, via destructuring
-const { cancelArchiveItem, askConfirmationDeletion } = store;
+// import des actions du store, via destructuring
+const { cancelArchiveItem, askConfirmationDeletion, askConfirmationDeletionAllArchivedTasks } = store;
 
 
 </script>
@@ -74,8 +91,6 @@ const { cancelArchiveItem, askConfirmationDeletion } = store;
         display: flex;
         flex-direction: column;
         .one-task {     
-                margin-top: 20px;
-                margin-bottom: 20px;
                 .container__task {
                         display: flex;
                         flex-direction: row;
@@ -87,6 +102,14 @@ const { cancelArchiveItem, askConfirmationDeletion } = store;
                         position: relative;
                         z-index: 1;
                 }
+        }
+
+        .delete-all-archived-tasks-span {
+                margin-top: 1rem;
+                text-align: center;
+        }
+        .delete-all-archived-tasks {
+                font-size: 1.85rem;
         }
 }
 

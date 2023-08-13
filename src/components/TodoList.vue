@@ -80,14 +80,12 @@ const { toggleCompleted, archiveItem } = store;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                margin-top: 20px;
                 
                 .container {
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
                         margin-right: 15px;
-                        margin-bottom: 20px;
                 }
 
                 .separator {

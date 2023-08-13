@@ -3,19 +3,26 @@ import { defineStore } from "pinia";
 export const useTodoListStore = defineStore('todo-List', {
         // state
         state: () => ({
+                successAddTask: false,
+                errorAddTask: false,
                 todoList: [],
                 id: 0,
                 completedTasksArray: [],
                 tasksProgression: 0,
                 archiveList: [],
-                successAddTask: false,
-                errorAddTask: false,
+                displayConfirmationDeleteAllArchivedTasks: false,
         }),
 
         // getters
 
         // actions
         actions: {
+                //! TAUX DE PROGRESSION DES TÂCHES
+                percentageTasksProgression() {
+                        this.tasksProgression = Math.round((this.completedTasksArray.length * 100 / this.todoList.length));
+                },
+
+                //! AJOUT D'UNE TÂCHE
                 addItem(valueOfVModel) {
                         this.todoList.unshift({
                                 item: valueOfVModel,
@@ -43,6 +50,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         }
                 },
 
+                //! MARQUER UNE TÂCHE COMME TERMINÉE
                 toggleCompleted(idToFind) {
                         /* Dans le tableau todoList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
                         alors je stocke cet élément dans la constante task */
@@ -72,10 +80,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         this.percentageTasksProgression();
                 },
 
-                percentageTasksProgression() {
-                        this.tasksProgression = Math.round((this.completedTasksArray.length * 100 / this.todoList.length));
-                },
-
+                //! ARCHIVAGE OU DÉSARCHIVAGE D'UNE TÂCHE
                 archiveItem(itemID, taskIndex) {
                         /* Stocke dans une variable l'élément dont l'id correspond à l'id passé en argument */
                         const task = this.todoList.find(object => object.id === itemID);
@@ -94,8 +99,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         /* Puis je supprime cette tâche du tableau "completedTasksArray" */
                         this.completedTasksArray.splice(taskToUncompleteID, 1);
                         /* Je relance le calcul d'avancement (pourcentage) des tâches */
-                        this.percentageTasksProgression();
-                        
+                        this.percentageTasksProgression(); 
                 },
 
                 cancelArchiveItem(itemID) {
@@ -119,6 +123,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         this.percentageTasksProgression();
                 },
 
+                //! SUPPRESSION DÉFINITIVE D'UNE TÂCHE
                 askConfirmationDeletion(itemID) {
                         /* Dans le tableau archiveList, pour chaque élément, si l'id d'un éléménent correspond à l'id donné en argument
                         alors je stocke cet élément dans la constante task */
@@ -130,7 +135,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         }
                 },
 
-                cancelDeleteTask(itemID) {
+                cancelDeleteOneArchivedTask(itemID) {
                         /* Raisonnement inverse de "askConfirmationDeletion()" */
                         const task = this.archiveList.find(objectElement => objectElement.id === itemID);
                         if (task) {
@@ -138,7 +143,7 @@ export const useTodoListStore = defineStore('todo-List', {
                         }
                 },
 
-                deleteTask(itemID) {
+                deleteOneArchivedTask(itemID) {
                         /* le tableau todoList sera mise à jour selon le filtre : */
                         this.archiveList = this.archiveList.filter(object => {
                                 /* retourne tous les objets dont l'id NE correspond PAS à l'id en argument */
@@ -148,5 +153,21 @@ export const useTodoListStore = defineStore('todo-List', {
                         this.confirmationDeleteMessage = false;
                 },
 
+                //! SUPPRESSION DÉFINITIVE DE TOUTES LES TÂCHES
+                askConfirmationDeletionAllArchivedTasks() {
+                        /*  Je demande confirmation à l'utilisateur de supprimer toutes les tâches archivées.
+                        Si oui, je vide complètement le tableau des tâches archivées
+                        Si non, je fais simplement disparaitre le message */
+                        this.displayConfirmationDeleteAllArchivedTasks = true;
+                },
+                
+                cancelDeleteAllArchivedTasks() {
+                        this.displayConfirmationDeleteAllArchivedTasks = false;
+                },
+
+                deleteAllArchivedTasks() {
+                        this.archiveList.splice(0, this.archiveList.length);
+                        this.displayConfirmationDeleteAllArchivedTasks = false;
+                },
         }
 })

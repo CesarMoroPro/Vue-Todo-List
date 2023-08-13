@@ -1,18 +1,18 @@
 <template>
         <div class="ask-confirmation">
-                        <p class="confirmation-message">Voulez-vous vraiment supprimer la tâche <span class="important-task-content">{{ targetArchivedTaskContent }}</span> ? La suppression est définitive.</p>
-                
+                <p class="confirmation-message">Voulez-vous supprimer toutes les tâches archivées ? La suppression est définitive.</p>
+
                 <div class="buttons">
                         <v-btn 
                                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                                @click="cancelDeleteTask(targetArchivedTaskID)"
+                                @click="cancelDeleteAllArchivedTasks()"
                         >
                                 NON
                         </v-btn>
                 
                         <v-btn 
                                 variant="outlined" elevation="4" size="x-large" :ripple="true"
-                                @click="deleteTask(targetArchivedTaskID)"
+                                @click="deleteAllArchivedTasks()"
                         >
                                 OUI
                         </v-btn>
@@ -21,28 +21,19 @@
 </template>
 
 <script setup>
-// Import du store useTodoListStore
-import { useTodoListStore } from "@/stores/todoList.js";
-/* Import de { defineProps } de vue */
-import { defineProps } from "vue";
-// Import de storeToRefs pour garantir les Reactive Properties
-import { storeToRefs } from "pinia";
 
-// Stockage de tout le store dans une variable
+/* J'importe le fichier store "useTodoListStore" */
+import { useTodoListStore } from '../../stores/todoList';
+
+/* Je stocke mon store dans une constante */
 const store = useTodoListStore();
 
-// Je définis la props qui recevra l'id de la tâche depuis le SFC TodoArchive.vue
-const props = defineProps({
-        targetArchivedTaskID: Number,
-        targetArchivedTaskContent: String,
-});
+/* J'extrais les actions du store nécessaires dans ce composant */
+const { cancelDeleteAllArchivedTasks, deleteAllArchivedTasks } = store;
 
-/* Je rends accessible la state "archiveList", avec storeToRefs puisque c'est une state et non une action */
-const { archiveList } = storeToRefs(store);
-
-/* Je rends accessible les actions du store */
-const { deleteTask, cancelDeleteTask } = store;
 </script>
+
+
 
 <style lang="scss" scoped>
 .ask-confirmation {
