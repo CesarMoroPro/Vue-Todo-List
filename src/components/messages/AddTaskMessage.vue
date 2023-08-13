@@ -1,6 +1,6 @@
 <template>
-                <p class="success-alert" v-show="successAddTask" >{{ successMessage }}</p>
-                <p class="error-alert" v-show="errorAddTask" >{{ errorMessage }}</p>
+                <p class="success-alert" v-show="successAddTaskMessage" >{{ successMessage }}</p>
+                <p class="error-alert" v-show="errorAddTaskMessage" >{{ errorMessage }}</p>
 </template>
 
 <script setup>
@@ -12,11 +12,11 @@ import { storeToRefs } from "pinia";
 // Stockage de tout le store dans une variable
 const store = useTodoListStore();
 
-const successMessage = "La tâche a été ajoutée à la liste."
-const errorMessage = "Une tâche ne peut pas être vide."
+const successMessage = "La tâche a été ajoutée à la liste.";
+const errorMessage = "Une tâche ne peut pas être vide.";
 
 /* Je rend accessible la state "successAddTask", avec storeToRefs puisque c'est une state et non une action */
-const { successAddTask, errorAddTask } = storeToRefs(store);
+const { successAddTaskMessage, errorAddTaskMessage } = storeToRefs(store);
 
 </script>
 

@@ -6,13 +6,13 @@
                         <!-- L'input doit stocker la valeur utilisateur dans une data, donc via un v-model -->
                         <input type="text" v-model="todo" />
 
-                        <!-- Message de confirmation d'ajout d'une tâche -->
-                        <div id="add-item-success-message">
-                                <AddTaskMessage />
-                        </div>
-
                         <AddTaskButton :props-input-value="todo" />
                 </form>
+
+                <!-- Message de confirmation d'ajout d'une tâche -->
+                <div id="add-item-success-message" :class="successAddTaskMessage || errorAddTaskMessage ? 'visible' : 'invisible' ">
+                        <AddTaskMessage />
+                </div>
 
         </div>
 </template>
@@ -26,6 +26,8 @@ import AddTaskMessage from '@/components/messages/AddTaskMessage.vue';
 import { ref } from "vue";
 // Puisqu'on fait appel à une fonction qui est dans le store, on doit importer ce store
 import { useTodoListStore } from '@/stores/todoList.js';
+// Import de "storeToRefs" 
+import { storeToRefs } from 'pinia';
 
 
 // Définition de la const todo qui est bindée par v-model
@@ -33,6 +35,8 @@ const todo = ref('');
 /* Définition de la const store qui utilise le store useTodoListStore.
 À partir de là, on a accès aux states, actions et getters du store useTodoListStore */
 const store = useTodoListStore();
+// Extraction des states nécessaires de manière réactive
+const { successAddTaskMessage, errorAddTaskMessage } = storeToRefs(store)
 
 function addItemAndClearInputAndDisplayMessage(string) {
         if (string.length === 0) {
@@ -88,5 +92,12 @@ form {
 
 #add-item-success-message {
         text-align: center;
+}
+
+.visible {
+        height: 2rem;
+}
+.invisible {
+        height: 2.6rem;
 }
 </style>

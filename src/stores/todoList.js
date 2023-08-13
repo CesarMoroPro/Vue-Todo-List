@@ -3,8 +3,8 @@ import { defineStore } from "pinia";
 export const useTodoListStore = defineStore('todo-List', {
         // state
         state: () => ({
-                successAddTask: false,
-                errorAddTask: false,
+                successAddTaskMessage: false,
+                errorAddTaskMessage: false,
                 todoList: [],
                 id: 0,
                 completedTasksArray: [],
@@ -38,14 +38,14 @@ export const useTodoListStore = defineStore('todo-List', {
 
                 addTaskMessage(errorOrSuccess) {
                         if (errorOrSuccess === "error") {
-                                this.errorAddTask = true;
+                                this.errorAddTaskMessage = true;
                                 setTimeout( () => {
-                                        this.errorAddTask = false;
+                                        this.errorAddTaskMessage = false;
                                 }, 2000);
                         } else if (errorOrSuccess === "success") {
-                                this.successAddTask = true;
+                                this.successAddTaskMessage = true;
                                 setTimeout( () => {
-                                        this.successAddTask = false;
+                                        this.successAddTaskMessage = false;
                                 }, 2000);
                         }
                 },
