@@ -1,6 +1,6 @@
 <template>
         <header>
-                <span class="connexion-button">Connexion</span>
+                <router-link to="/login" class="connexion-button">Connexion</router-link>
                 <h1 class="main-title">Vue3 To Do List</h1>
 
                 <TodoForm />

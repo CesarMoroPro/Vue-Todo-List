@@ -1,11 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-
-import TodoApp from '@/views/TodoApp.vue';
 </script>
 
 <template>
-        <TodoApp />
+        <router-view></router-view>
 </template>
 
 <style lang="scss">

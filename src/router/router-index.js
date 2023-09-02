@@ -1,16 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import TodoApp from '@/views/TodoApp.vue';
+/* Le component Login est importé en lazy loading, donc directement dans la définiton de la route*/
+// import Login from '@/views/Login.vue';
 
+//> Création du tableau de routes
+const routes = [
+        {
+                path: '/',
+                name: 'home',
+                component: TodoApp,
+        },
+    
+        {
+                path: '/login',
+                name: 'login',
+                component: () => import('@/views/Login.vue'),
+        },
+]
+
+// > Mise en place du routeur
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: TodoApp,
-    },
-  ]
+        // web history
+        history: createWebHistory(import.meta.env.BASE_URL),
+        // tableau de routes
+        routes,
 })
 
-export default router
+export default router;
