@@ -17,6 +17,12 @@ const routes = [
                 name: 'login',
                 component: () => import('@/views/Login.vue'),
         },
+
+        {
+                path: '/:catchAll(.*)',
+                name: 'NotFound',
+                component: () => import('@/views/NotFound.vue'),
+        },
 ]
 
 // > Mise en place du routeur
